@@ -1,0 +1,288 @@
+import pygame , sys
+from pygame.locals import *
+import time
+import random
+pygame.init()
+white = (255 , 255 , 255)
+black = (100 , 0 , 0)
+red = (255 , 0 , 0)
+green = (0 , 255 , 0)
+screen_width = 800
+screen_height = 600
+
+gameDisp = pygame.display.set_mode((screen_width , screen_height))
+pygame.display.set_caption('SOCKET')
+clock = pygame.time.Clock()
+FPS = 5
+blockSize = 40
+noPixel = 0
+
+def move(self):
+    self.x -=self.speed
+    pos = self.X
+    return pos 
+    
+
+def gamequit():
+    pygame.quit()
+ 
+    sys.exit(0)
+
+font = pygame.font.SysFont(None, 25, bold=True)
+
+def drawGrid():
+
+    grid = screen_width // blockSize
+
+def strength(blockSize, immunity):
+
+
+
+    for size in immunity:
+
+        pygame.draw.rect(gameDisp , black , [size[0]+5 , size[1] , blockSize , blockSize] , 2)
+
+
+
+def msg_screen(msg, color):
+
+    screen_text = font.render(msg, True, color)
+
+    gameDisp.blit(screen_text, [screen_width/2, screen_height/2])
+
+
+
+def gameLoop():
+
+    Exit = False
+
+    Over = False
+
+
+
+    x_pos = screen_width/2
+
+    y_pos = screen_height/2
+
+
+
+    change_pos_x = 0
+
+    change_pos_y = 0
+
+
+
+    immunity = []
+
+    immunity_level = 1
+
+
+
+    healthy_x = round(random.randrange(0, screen_width+blockSize)/10.0)*10.0
+
+    healthy_y = round(random.randrange(0, screen_height+blockSize)/10.0)*10.0
+    junk_x = round(random.randrange(0, screen_width-blockSize)/10.0)*10.0
+    junk_y = round(random.randrange(0, screen_height-blockSize)/10.0)*10.0
+
+
+
+    while not Exit:
+
+
+
+        while Over == True:
+
+            gameDisp.fill(white)
+            rect.move(screen_width,screen_height)
+            
+
+            msg_screen("Sorry ..You are affected by COVID-19, press c to play again or Q to quit", red)
+
+            pygame.display.update()
+
+
+
+            for event in pygame.event.get():
+
+                if event.type == pygame.QUIT:
+
+                    Over = False
+                    Exit = True
+
+
+
+                if event.type == pygame.KEYDOWN:
+
+                    if event.key == pygame.K_q:
+
+                        Exit = True
+
+                        Over = False
+
+                    if event.key == pygame.K_c:
+
+                        gameLoop()
+
+
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+
+                Exit = True
+
+
+
+            if event.type == pygame.KEYDOWN:
+
+                if event.key == pygame.K_ESCAPE:
+
+                    gamequit()
+
+                leftArrow = event.key == pygame.K_LEFT
+
+                rightArrow = event.key == pygame.K_RIGHT
+
+                upArrow = event.key == pygame.K_UP
+
+                downArrow = event.key == pygame.K_DOWN
+
+
+
+                if leftArrow:
+
+                    change_pos_x = -blockSize
+
+                    change_pos_y = noPixel
+
+                elif rightArrow:
+
+                    change_pos_x = blockSize
+
+                    change_pos_y = noPixel
+
+                elif upArrow:
+
+                    change_pos_y = -blockSize
+
+                    change_pos_x = noPixel
+
+                elif downArrow:
+
+                    change_pos_y = blockSize
+
+                    change_pos_x = noPixel
+                else:
+                    pass
+
+            lead_x = 0
+            lead_y = 0
+
+
+            if x_pos >= screen_width or x_pos < 0 or y_pos >= screen_height or lead_y < 0:
+
+                Over = True
+
+        lead_x = 0
+        lead_y = 0
+
+
+        lead_x += change_pos_x
+
+        lead_y += change_pos_y
+
+        healthy_X = 10
+        healthy_Y = 10
+        junk_X = 1
+        junk_Y = 1
+        junk_X = 1
+
+
+
+
+
+        gameDisp.fill(white)
+
+
+
+        Thickness = 20
+
+
+
+        print([int(healthy_X),int(healthy_Y),Thickness,Thickness])
+        pygame.draw.rect(gameDisp, green, [healthy_X,healthy_Y,Thickness,Thickness])
+
+        print([int(junk_X),int(junk_Y),Thickness,Thickness])
+        pygame.draw.rect(gameDisp, red, [junk_X,junk_Y,Thickness,Thickness])
+
+
+        allspriteslist = []
+
+        allspriteslist.append(x_pos)
+
+        allspriteslist.append(y_pos)
+
+        immunity.append(allspriteslist)
+
+
+
+        #if len(immunity) > immunity_level:
+
+            #del immunity[0]
+
+
+
+        for eachSegment in immunity [:-1]:
+
+            if eachSegment == allspriteslist:
+
+                Over = False
+
+
+
+        strength(blockSize, immunity)
+
+
+
+        pygame.display.update()
+
+        if x_pos >= healthy_X and x_pos <= healthy_X + Thickness:
+
+            if y_pos >= healthy_Y and y_pos <= healthy_Y + Thickness:
+
+                healthy_X = round(random.randrange(0, screen_width-blockSize)/10.0)*10.0
+
+                healthy_Y = round(random.randrange(0, screen_height-blockSize)/10.0)*10.0
+
+
+
+        elif x_pos >= junk_X and x_pos <= junk_X + Thickness:
+
+            if y_pos >= junk_Y and y_pos <= junk_Y + Thickness:
+
+                junk_X = round(random.randrange(0, screen_width-blockSize)/10.0)*10.0
+
+                junk_Y = round(random.randrange(0, screen_height-blockSize)/10.0)*10.0
+
+
+        else:
+            pass
+
+
+
+
+
+
+
+
+
+
+        clock.tick(FPS)
+
+
+
+    pygame.quit()
+
+    quit()
+
+gameLoop()
